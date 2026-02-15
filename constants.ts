@@ -1,0 +1,146 @@
+import { BlogPost, Wallpaper } from './types';
+
+export const WALLPAPERS: Wallpaper[] = [
+  {
+    id: '1',
+    slug: 'liquid-oil',
+    title: 'Liquid Oil',
+    category: 'Abstract',
+    imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
+    resolution: '1170 x 2532',
+    size: '2.4MB',
+    description: 'A mesmerizing blend of dark fluid dynamics with golden accents. Perfect for OLED screens to save battery while looking stunning.',
+    colors: ['#1a1a1a', '#8c6b3e', '#4a4a4a']
+  },
+  {
+    id: '2',
+    slug: 'neon-drift',
+    title: 'Neon Drift',
+    category: 'Gradient',
+    imageUrl: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=800&auto=format&fit=crop',
+    resolution: '1170 x 2532',
+    size: '1.8MB',
+    description: 'Vibrant neon gradients that shift smoothly across the spectrum. Adds a pop of energy to your lock screen.',
+    colors: ['#ff00cc', '#333399', '#000000']
+  },
+  {
+    id: '3',
+    slug: 'alpine-mist',
+    title: 'Alpine Mist',
+    category: 'Nature',
+    imageUrl: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=800&auto=format&fit=crop',
+    resolution: '1284 x 2778',
+    size: '3.1MB',
+    description: 'Serene mountain peaks shrouded in morning mist. A calming view for stressful days.',
+    colors: ['#f0f0f0', '#78909c', '#263238']
+  },
+  {
+    id: '4',
+    slug: 'glass-shards',
+    title: 'Glass Shards',
+    category: 'Architecture',
+    imageUrl: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop',
+    resolution: '1170 x 2532',
+    size: '2.2MB',
+    description: 'Abstract geometric shapes resembling shattered glass or modern architectural facades.',
+    colors: ['#2196f3', '#1e88e5', '#1565c0']
+  },
+  {
+    id: '5',
+    slug: 'deep-void',
+    title: 'Deep Void',
+    category: 'Dark',
+    imageUrl: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=800&auto=format&fit=crop',
+    resolution: '1170 x 2532',
+    size: '1.5MB',
+    description: 'Pure dark gradients designed specifically for minimalists and battery saving on OLED panels.',
+    colors: ['#000000', '#121212', '#212121']
+  },
+  {
+    id: '6',
+    slug: 'neon-nights',
+    title: 'Neon Nights',
+    category: 'City',
+    imageUrl: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?q=80&w=800&auto=format&fit=crop',
+    resolution: '1284 x 2778',
+    size: '3.5MB',
+    description: 'The electric pulse of Tokyo streets at night. Cyberpunk vibes for your daily driver.',
+    colors: ['#d50000', '#2962ff', '#000000']
+  },
+  {
+    id: '7',
+    slug: 'sand-dunes',
+    title: 'Sand Dunes',
+    category: 'Nature',
+    imageUrl: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=800&auto=format&fit=crop',
+    resolution: '1170 x 2532',
+    size: '2.8MB',
+    description: 'Minimalist sand textures from the Sahara. Warm tones for a cozy feel.',
+    colors: ['#d7ccc8', '#8d6e63', '#5d4037']
+  },
+  {
+    id: '8',
+    slug: 'prism',
+    title: 'Prism',
+    category: 'Abstract',
+    imageUrl: 'https://images.unsplash.com/photo-1550064824-8f993041ffd3?q=80&w=800&auto=format&fit=crop',
+    resolution: '1284 x 2778',
+    size: '1.9MB',
+    description: 'Light refracting through a prism, creating a soft yet colorful display.',
+    colors: ['#e91e63', '#9c27b0', '#3f51b5']
+  }
+];
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: '1',
+    slug: 'why-dark-mode-wallpapers-save-battery',
+    title: 'Why Dark Mode Wallpapers Save Battery',
+    category: 'Trends',
+    categoryColor: 'text-emerald-500',
+    date: 'Oct 12, 2023',
+    readTime: '5 min read',
+    author: 'Alex Morgan',
+    imageUrl: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800&auto=format&fit=crop',
+    excerpt: 'Exploring the technical benefits of OLED screens and how true black backgrounds impact power consumption on modern devices.',
+    content: [
+      'The shift towards OLED technology in modern smartphones has brought about a significant change in how we think about interface design and energy consumption. Unlike traditional LCD screens, which require a backlight to illuminate all pixels regardless of color, OLED panels light up each pixel individually.',
+      'When an OLED pixel displays true black (#000000), it effectively turns off. This means it consumes zero energy. Dark gray colors, while aesthetically pleasing and easier on the eyes for reading, still require some power to display. However, the difference is substantial compared to a bright white background.',
+      'Using a wallpaper that is predominantly black can result in measurable battery savings, especially if you spend a lot of time on your home screen or lock screen.'
+    ]
+  },
+  {
+    id: '2',
+    slug: 'minimalism-in-the-digital-age',
+    title: 'Minimalism in the Digital Age',
+    category: 'Inspiration',
+    categoryColor: 'text-purple-500',
+    date: 'Sep 28, 2023',
+    readTime: '3 min read',
+    author: 'Sarah Chen',
+    imageUrl: 'https://images.unsplash.com/photo-1550064824-8f993041ffd3?q=80&w=800&auto=format&fit=crop',
+    excerpt: 'How reducing visual clutter on your phone\'s home screen can improve focus and reduce anxiety.',
+    content: [
+      'In a world vying for our attention at every notification ding, the wallpaper we choose is often the first thing we see hundreds of times a day.',
+      'Minimalist wallpapers aren\'t just an aesthetic choice; they are a functional one. Complex images can make icons hard to read and increase cognitive load. A simple, clean background allows your mind to focus on the task at hand rather than deciphering the background noise.',
+      'We recommend trying a gradient or a simple geometric shape for a week and seeing if your daily mobile interactions feel calmer.'
+    ]
+  },
+  {
+    id: '3',
+    slug: 'creating-abstract-art-with-css',
+    title: 'Creating Abstract Art with CSS',
+    category: 'Tutorial',
+    categoryColor: 'text-blue-500',
+    date: 'Aug 15, 2023',
+    readTime: '8 min read',
+    author: 'David Code',
+    imageUrl: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=800&auto=format&fit=crop',
+    excerpt: 'A technical deep dive into generating generative art wallpapers using only code and browsers.',
+    content: [
+      'Generative art is fascinating. By using simple CSS properties like gradients, box-shadows, and border-radius, we can create complex, organic-looking shapes that rival hand-drawn vectors.',
+      'In this tutorial, we will explore the `conic-gradient` property and how mixing it with CSS filters like `blur()` and `contrast()` can create the "gooey" liquid effect popular in modern wallpapers.',
+      'The best part? Because it is code, it is infinitely scalable. You can render these designs at 4K, 8K, or even print resolution without any loss of quality.'
+    ]
+  }
+];

@@ -1,0 +1,8 @@
+name = "lumina-wallpapers"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lumina-db"
+database_id = "a4e19699-b860-447f-b506-ea6ea813d6d8"
