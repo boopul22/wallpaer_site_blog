@@ -28,9 +28,39 @@
       /* Hide scrollbar for horizontal scrolling areas */
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      
+
       body {
         background-color: #0a0a0a;
+        color: #d4d4d4;
+      }
+
+      /* Loading spinner */
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      .spinner {
+        width: 24px;
+        height: 24px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-top-color: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+
+      /* Smooth image loading */
+      img {
+        image-rendering: auto;
+      }
+
+      /* Better focus styles */
+      *:focus-visible {
+        outline: 1px solid rgba(255, 255, 255, 0.3);
+        outline-offset: 2px;
+      }
+
+      /* Select styling for dark theme */
+      select option {
+        background-color: #171717;
         color: #d4d4d4;
       }
     </style>
@@ -45,7 +75,7 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+
 </head>
   <body>
     <div id="root"></div>

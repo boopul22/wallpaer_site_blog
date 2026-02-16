@@ -5,6 +5,9 @@ import { adminCreateWallpaper, adminUpdateWallpaper, adminGetWallpaper, isLogged
 
 const CATEGORIES = ['Abstract', 'Nature', 'Gradient', 'Architecture', 'Dark', 'City'];
 
+const inputClass = "w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-white/20 focus:bg-white/[0.06] focus:outline-none transition-all duration-200";
+const labelClass = "text-[12px] font-medium text-neutral-500 uppercase tracking-wide";
+
 const WallpaperForm: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -97,70 +100,62 @@ const WallpaperForm: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
-      <button onClick={() => navigate('/admin/dashboard')} className="mb-6 flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors">
-        <ArrowLeft size={18} />
-        Back to Dashboard
+    <div className="mx-auto max-w-2xl px-5 py-10 sm:px-6 sm:py-12">
+      <button onClick={() => navigate('/admin/dashboard')} className="mb-8 flex items-center gap-2 text-sm text-neutral-500 hover:text-white transition-colors duration-200">
+        <ArrowLeft size={16} />
+        Dashboard
       </button>
 
-      <h1 className="text-2xl font-medium text-white mb-8">{isEdit ? 'Edit Wallpaper' : 'Add Wallpaper'}</h1>
+      <h1 className="text-2xl font-semibold text-white mb-8">{isEdit ? 'Edit Wallpaper' : 'Add Wallpaper'}</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <label className="flex flex-col gap-1">
-          <span className="text-xs text-neutral-400">Title</span>
-          <input type="text" value={form.title} onChange={(e) => handleTitleChange(e.target.value)} required
-            className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-white/20 focus:outline-none" />
-        </label>
-
-        <label className="flex flex-col gap-1">
-          <span className="text-xs text-neutral-400">Slug</span>
-          <input type="text" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} required
-            className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-white/20 focus:outline-none" />
-        </label>
-
-        <label className="flex flex-col gap-1">
-          <span className="text-xs text-neutral-400">Category</span>
-          <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-white/20 focus:outline-none">
-            {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1">
-          <span className="text-xs text-neutral-400">Image URL</span>
-          <input type="url" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} required placeholder="https://..."
-            className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-white/20 focus:outline-none" />
-        </label>
-
-        <div className="grid grid-cols-2 gap-4">
-          <label className="flex flex-col gap-1">
-            <span className="text-xs text-neutral-400">Resolution</span>
-            <input type="text" value={form.resolution} onChange={(e) => setForm({ ...form, resolution: e.target.value })} placeholder="1170 x 2532"
-              className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-white/20 focus:outline-none" />
-          </label>
-          <label className="flex flex-col gap-1">
-            <span className="text-xs text-neutral-400">Size</span>
-            <input type="text" value={form.size} onChange={(e) => setForm({ ...form, size: e.target.value })} placeholder="2.4MB"
-              className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-white/20 focus:outline-none" />
-          </label>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Title</label>
+          <input type="text" value={form.title} onChange={(e) => handleTitleChange(e.target.value)} required className={inputClass} />
         </div>
 
-        <label className="flex flex-col gap-1">
-          <span className="text-xs text-neutral-400">Description</span>
-          <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3}
-            className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-white/20 focus:outline-none resize-none" />
-        </label>
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Slug</label>
+          <input type="text" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} required className={inputClass} />
+        </div>
 
-        <label className="flex flex-col gap-1">
-          <span className="text-xs text-neutral-400">Colors (comma-separated hex codes)</span>
-          <input type="text" value={form.colorsStr} onChange={(e) => setForm({ ...form, colorsStr: e.target.value })} placeholder="#1a1a1a, #8c6b3e, #4a4a4a"
-            className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-white/20 focus:outline-none" />
-        </label>
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Category</label>
+          <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className={inputClass}>
+            {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
 
-        {error && <p className="text-red-400 text-sm">{error}</p>}
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Image URL</label>
+          <input type="url" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} required placeholder="https://..." className={inputClass} />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className={labelClass}>Resolution</label>
+            <input type="text" value={form.resolution} onChange={(e) => setForm({ ...form, resolution: e.target.value })} placeholder="1170 x 2532" className={inputClass} />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className={labelClass}>Size</label>
+            <input type="text" value={form.size} onChange={(e) => setForm({ ...form, size: e.target.value })} placeholder="2.4MB" className={inputClass} />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Description</label>
+          <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className={`${inputClass} resize-none`} />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Colors (comma-separated hex)</label>
+          <input type="text" value={form.colorsStr} onChange={(e) => setForm({ ...form, colorsStr: e.target.value })} placeholder="#1a1a1a, #8c6b3e, #4a4a4a" className={inputClass} />
+        </div>
+
+        {error && <p className="text-red-400/90 text-[13px]">{error}</p>}
 
         <button type="submit" disabled={loading}
-          className="rounded-lg bg-white px-4 py-3 text-sm font-medium text-neutral-950 hover:bg-neutral-200 transition-colors disabled:opacity-50 mt-2">
+          className="rounded-xl bg-white px-4 py-3 text-sm font-medium text-neutral-950 hover:bg-neutral-100 transition-colors duration-200 disabled:opacity-40 disabled:hover:bg-white mt-2">
           {loading ? 'Saving...' : isEdit ? 'Update Wallpaper' : 'Create Wallpaper'}
         </button>
       </form>

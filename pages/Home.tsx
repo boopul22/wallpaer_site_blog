@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Sparkles } from 'lucide-react';
 import { fetchWallpapers } from '../lib/api';
 import { Wallpaper } from '../types';
 import WallpaperCard from '../components/WallpaperCard';
@@ -29,34 +29,44 @@ const Home: React.FC = () => {
   return (
     <section className="animate-in fade-in duration-500">
       {/* Hero */}
-      <div className="relative overflow-hidden border-b border-white/5">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-800/30 via-neutral-950/0 to-neutral-950/0" />
-        <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
-          <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300 backdrop-blur-sm mb-6">
-            <span className="mr-2 h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            New v2.0 Release
+      <div className="relative overflow-hidden border-b border-white/[0.06]">
+        {/* Background gradient */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,_rgba(120,119,198,0.08),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,_rgba(255,255,255,0.04),transparent)]" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-5 pt-20 pb-16 text-center sm:px-6 sm:pt-28 sm:pb-20 lg:px-8">
+          {/* Badge */}
+          <div className="inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-neutral-300 backdrop-blur-sm mb-8">
+            <Sparkles size={12} className="mr-2 text-emerald-400" />
+            New wallpapers weekly
           </div>
-          <h1 className="text-4xl font-medium tracking-tight text-white sm:text-6xl mb-6">
-            Premium Phone Wallpapers
+
+          <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
+            Premium Phone
+            <br />
+            <span className="text-neutral-400">Wallpapers</span>
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-neutral-400 mb-10">
-            Curated collection of high-fidelity backgrounds for your digital life. <br className="hidden sm:block" />
-            Minimalist, abstract, and nature-inspired designs.
+
+          <p className="mx-auto mt-6 max-w-lg text-base text-neutral-500 leading-relaxed sm:text-lg">
+            Curated high-fidelity backgrounds. Minimalist,
+            abstract, and nature-inspired designs.
           </p>
 
           {/* Category Pills */}
-          <div className="flex justify-center gap-2 overflow-x-auto no-scrollbar py-2">
+          <div className="mt-10 flex justify-center gap-2 overflow-x-auto no-scrollbar px-4 py-1">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => {
-                    setSelectedCategory(cat);
-                    setVisibleCount(8);
+                  setSelectedCategory(cat);
+                  setVisibleCount(8);
                 }}
-                className={`whitespace-nowrap rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-200 ${
                   selectedCategory === cat
-                    ? 'bg-white text-neutral-950 scale-105'
-                    : 'border border-white/10 bg-white/5 text-neutral-300 hover:bg-white/10'
+                    ? 'bg-white text-neutral-950 shadow-[0_0_20px_rgba(255,255,255,0.1)]'
+                    : 'border border-white/[0.08] text-neutral-400 hover:text-white hover:border-white/20 hover:bg-white/[0.04]'
                 }`}
               >
                 {cat}
@@ -67,31 +77,40 @@ const Home: React.FC = () => {
       </div>
 
       {/* Gallery Grid */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
         {loading ? (
-          <div className="text-center py-12 text-neutral-500">Loading wallpapers...</div>
+          <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <div className="spinner" />
+            <p className="text-sm text-neutral-500">Loading wallpapers...</p>
+          </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:gap-5">
               {displayedWallpapers.map((wallpaper) => (
                 <WallpaperCard key={wallpaper.id} wallpaper={wallpaper} />
               ))}
             </div>
 
             {displayedWallpapers.length === 0 && (
-                <div className="text-center py-12 text-neutral-500">
-                    No wallpapers found in this category.
-                </div>
+              <div className="flex flex-col items-center justify-center py-20 gap-2">
+                <p className="text-sm text-neutral-500">No wallpapers found in this category.</p>
+                <button
+                  onClick={() => setSelectedCategory('All')}
+                  className="text-sm text-neutral-400 hover:text-white transition-colors duration-200"
+                >
+                  View all wallpapers
+                </button>
+              </div>
             )}
 
             {visibleCount < wallpapers.length && (
-              <div className="mt-12 flex justify-center">
+              <div className="mt-14 flex justify-center">
                 <button
-                    onClick={handleLoadMore}
-                    className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
+                  onClick={handleLoadMore}
+                  className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-7 py-2.5 text-sm font-medium text-neutral-300 hover:text-white hover:bg-white/[0.06] hover:border-white/15 transition-all duration-200"
                 >
                   Load More
-                  <ChevronDown size={16} />
+                  <ChevronDown size={15} />
                 </button>
               </div>
             )}

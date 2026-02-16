@@ -24,73 +24,105 @@ const BlogPost: React.FC = () => {
   }, [slug]);
 
   if (loading) {
-    return <div className="flex h-[50vh] items-center justify-center text-neutral-500">Loading...</div>;
+    return (
+      <div className="flex h-[60vh] flex-col items-center justify-center gap-3">
+        <div className="spinner" />
+        <p className="text-sm text-neutral-500">Loading...</p>
+      </div>
+    );
   }
 
   if (!post) {
     return (
-      <div className="flex h-[50vh] flex-col items-center justify-center text-neutral-400">
-        <h2 className="text-2xl font-medium text-white">Article not found</h2>
-        <Link to="/blog" className="mt-4 text-emerald-500 hover:underline">Back to Blog</Link>
+      <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
+        <h2 className="text-xl font-medium text-white">Article not found</h2>
+        <Link to="/blog" className="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
+          &larr; Back to Blog
+        </Link>
       </div>
     );
   }
 
   return (
     <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
+      <div className="mx-auto max-w-2xl px-5 py-12 sm:px-6 sm:py-16">
         <button
           onClick={() => navigate('/blog')}
-          className="mb-8 flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
+          className="mb-10 flex items-center gap-2 text-sm text-neutral-500 hover:text-white transition-colors duration-200"
         >
-          <ArrowLeft size={18} />
+          <ArrowLeft size={16} />
           Back to Blog
         </button>
 
-        <header className="mb-10 text-center">
-          <span className={`rounded-full px-3 py-1 text-xs font-medium bg-white/5 ${post.categoryColor}`}>
-            {post.category}
-          </span>
-          <h1 className="mt-6 text-3xl font-medium tracking-tight text-white sm:text-4xl">{post.title}</h1>
-          <div className="mt-6 flex items-center justify-center gap-4 text-xs text-neutral-400">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-full bg-neutral-700 flex items-center justify-center text-[10px] text-white font-bold">
-                {post.author.charAt(0)}
-              </div>
-              <span>{post.author}</span>
+        {/* Article header */}
+        <header className="mb-10">
+          <div className="flex items-center gap-3 mb-5">
+            <span className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wide bg-white/[0.05] ${post.categoryColor}`}>
+              {post.category}
+            </span>
+            <span className="text-[12px] text-neutral-600">{post.readTime}</span>
+          </div>
+
+          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl leading-[1.15]">
+            {post.title}
+          </h1>
+
+          <div className="mt-6 flex items-center gap-3">
+            <div className="h-8 w-8 rounded-full bg-neutral-800 flex items-center justify-center text-[11px] text-white font-semibold">
+              {post.author.charAt(0)}
             </div>
-            <span>•</span>
-            <span>{post.date}</span>
+            <div className="flex flex-col">
+              <span className="text-sm text-neutral-300 font-medium">{post.author}</span>
+              <span className="text-[12px] text-neutral-600">{post.date}</span>
+            </div>
           </div>
         </header>
 
-        <div className="overflow-hidden rounded-xl bg-neutral-900 ring-1 ring-white/10 mb-10">
+        {/* Featured image */}
+        <div className="overflow-hidden rounded-xl bg-neutral-900 ring-1 ring-white/[0.06] mb-12">
           <img src={post.imageUrl} alt={post.title} className="w-full h-auto" />
         </div>
 
-        <div className="prose prose-invert prose-neutral prose-lg mx-auto">
+        {/* Content */}
+        <div className="space-y-6">
           {post.content.map((paragraph, idx) => (
-            <p key={idx} className="text-neutral-300 leading-7 mb-6">{paragraph}</p>
+            <p key={idx} className="text-[16px] leading-[1.8] text-neutral-400">
+              {paragraph}
+            </p>
           ))}
         </div>
 
-        <div className="mt-16 border-t border-white/10 pt-10">
-          <h4 className="mb-6 text-sm font-medium text-white">Related Wallpapers</h4>
-          <div className="grid grid-cols-2 gap-4">
-            {relatedWallpapers.map(w => (
-              <Link key={w.id} to={`/wallpaper/${w.slug}`} className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-xl bg-neutral-900 ring-1 ring-white/5">
-                <img
-                  src={w.imageUrl}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  alt={w.title}
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Download className="text-white" size={24} />
-                </div>
+        {/* Related wallpapers */}
+        {relatedWallpapers.length > 0 && (
+          <div className="mt-16 border-t border-white/[0.06] pt-10">
+            <div className="flex items-center justify-between mb-6">
+              <h4 className="text-sm font-medium text-white">Related Wallpapers</h4>
+              <Link to="/" className="text-[12px] text-neutral-500 hover:text-white transition-colors duration-200">
+                View all &rarr;
               </Link>
-            ))}
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {relatedWallpapers.map(w => (
+                <Link
+                  key={w.id}
+                  to={`/wallpaper/${w.slug}`}
+                  className="group relative aspect-[9/16] overflow-hidden rounded-xl bg-neutral-900 ring-1 ring-white/[0.06]"
+                >
+                  <img
+                    src={w.imageUrl}
+                    className="h-full w-full object-cover transition-all duration-500 group-hover:scale-105"
+                    alt={w.title}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-neutral-950">
+                      <Download size={16} />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
