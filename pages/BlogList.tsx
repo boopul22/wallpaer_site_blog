@@ -2,11 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { fetchBlogPosts } from '../lib/api';
+import { useSEO } from '../lib/useSEO';
 import { BlogPost } from '../types';
 
 const BlogList: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useSEO({
+    title: 'Design Journal — Wallpaper Tips & Trends | FreeWallpaperVerse',
+    description: 'Read about wallpaper trends, design tips, and community showcases. Stay updated with the latest in mobile wallpaper design.',
+    canonical: 'https://freewallpaperverse.com/blog',
+  });
 
   useEffect(() => {
     fetchBlogPosts()
@@ -20,16 +27,16 @@ const BlogList: React.FC = () => {
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="pt-16 pb-12 sm:pt-20 sm:pb-14 border-b border-white/[0.06]">
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             Design Journal
-          </h2>
+          </h1>
           <p className="mt-3 text-base text-neutral-500 max-w-lg">
             Updates on wallpaper trends, design tips, and community showcases.
           </p>
         </div>
 
         {/* Posts */}
-        <div className="py-12 sm:py-14">
+        <section aria-label="Blog posts" className="py-12 sm:py-14">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-3">
               <div className="spinner" />
@@ -65,9 +72,9 @@ const BlogList: React.FC = () => {
                       <span className="text-[11px] text-neutral-600">{post.readTime}</span>
                     </div>
 
-                    <h3 className="text-[17px] font-medium text-white leading-snug group-hover:text-neutral-300 transition-colors duration-200">
+                    <h2 className="text-[17px] font-medium text-white leading-snug group-hover:text-neutral-300 transition-colors duration-200">
                       {post.title}
-                    </h3>
+                    </h2>
 
                     <p className="mt-2.5 text-sm leading-relaxed text-neutral-500 line-clamp-2 flex-1">
                       {post.excerpt}
@@ -85,7 +92,7 @@ const BlogList: React.FC = () => {
               ))}
             </div>
           )}
-        </div>
+        </section>
       </div>
     </section>
   );

@@ -15,6 +15,8 @@ const WallpaperCard: React.FC<WallpaperCardProps> = ({ wallpaper }) => {
           src={wallpaper.imageUrl}
           alt={wallpaper.title}
           loading="lazy"
+          width={450}
+          height={800}
           className="h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-105"
         />
         {/* Gradient overlay */}

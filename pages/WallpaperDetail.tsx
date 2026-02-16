@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download, Smartphone, Crop, Shield } from 'lucide-react';
 import { fetchWallpaperBySlug, fetchWallpapers } from '../lib/api';
+import { useSEO } from '../lib/useSEO';
 import { Wallpaper } from '../types';
 
 const WallpaperDetail: React.FC = () => {
@@ -25,6 +26,38 @@ const WallpaperDetail: React.FC = () => {
       })
       .finally(() => setLoading(false));
   }, [slug]);
+
+  useSEO({
+    title: wallpaper ? `${wallpaper.title} — Free ${wallpaper.category} Wallpaper | FreeWallpaperVerse` : undefined,
+    description: wallpaper?.description,
+    canonical: `https://freewallpaperverse.com/wallpaper/${slug}`,
+    ogImage: wallpaper?.imageUrl,
+    ogType: 'article',
+  });
+
+  useEffect(() => {
+    if (!wallpaper) return;
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      "name": wallpaper.title,
+      "description": wallpaper.description,
+      "contentUrl": wallpaper.imageUrl,
+      "thumbnailUrl": wallpaper.imageUrl,
+      "license": "https://freewallpaperverse.com/license",
+      "creator": {
+        "@type": "Organization",
+        "name": "FreeWallpaperVerse"
+      },
+      "isAccessibleForFree": true
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-schema';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+    return () => { document.getElementById('page-schema')?.remove(); };
+  }, [wallpaper]);
 
   if (loading) {
     return (
@@ -57,7 +90,7 @@ const WallpaperDetail: React.FC = () => {
           Back
         </button>
 
-        <div className="grid gap-8 lg:grid-cols-[1fr,420px] lg:gap-14 lg:items-start">
+        <article className="grid gap-8 lg:grid-cols-[1fr,420px] lg:gap-14 lg:items-start">
           {/* Image Preview */}
           <div className="relative overflow-hidden rounded-2xl bg-neutral-900 ring-1 ring-white/[0.06]">
             <img
@@ -130,13 +163,13 @@ const WallpaperDetail: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
         {/* Related */}
         {relatedWallpapers.length > 0 && (
-          <div className="mt-20 sm:mt-28">
+          <section aria-label="Related wallpapers" className="mt-20 sm:mt-28">
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-lg font-medium text-white">You might also like</h3>
+              <h2 className="text-lg font-medium text-white">You might also like</h2>
               <Link to="/" className="text-sm text-neutral-500 hover:text-white transition-colors duration-200">
                 View all &rarr;
               </Link>
@@ -161,7 +194,7 @@ const WallpaperDetail: React.FC = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </section>
         )}
       </div>
     </section>

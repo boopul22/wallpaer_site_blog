@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
 import { fetchBlogPostBySlug, fetchWallpapers } from '../lib/api';
+import { useSEO } from '../lib/useSEO';
 import { BlogPost as BlogPostType, Wallpaper } from '../types';
 
 const BlogPost: React.FC = () => {
@@ -22,6 +23,48 @@ const BlogPost: React.FC = () => {
       setRelatedWallpapers(wallpapers.slice(0, 2));
     }).finally(() => setLoading(false));
   }, [slug]);
+
+  useSEO({
+    title: post ? `${post.title} | FreeWallpaperVerse Blog` : undefined,
+    description: post?.excerpt,
+    canonical: `https://freewallpaperverse.com/blog/${slug}`,
+    ogImage: post?.imageUrl,
+    ogType: 'article',
+  });
+
+  useEffect(() => {
+    if (!post) return;
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": post.title,
+      "description": post.excerpt,
+      "image": post.imageUrl,
+      "datePublished": post.date,
+      "author": {
+        "@type": "Person",
+        "name": post.author
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "FreeWallpaperVerse",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://freewallpaperverse.com/logo.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://freewallpaperverse.com/blog/${slug}`
+      }
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-schema';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+    return () => { document.getElementById('page-schema')?.remove(); };
+  }, [post, slug]);
 
   if (loading) {
     return (
@@ -84,19 +127,19 @@ const BlogPost: React.FC = () => {
         </div>
 
         {/* Content */}
-        <div className="space-y-6">
+        <article className="space-y-6">
           {post.content.map((paragraph, idx) => (
             <p key={idx} className="text-[16px] leading-[1.8] text-neutral-400">
               {paragraph}
             </p>
           ))}
-        </div>
+        </article>
 
         {/* Related wallpapers */}
         {relatedWallpapers.length > 0 && (
           <div className="mt-16 border-t border-white/[0.06] pt-10">
             <div className="flex items-center justify-between mb-6">
-              <h4 className="text-sm font-medium text-white">Related Wallpapers</h4>
+              <h2 className="text-sm font-medium text-white">Related Wallpapers</h2>
               <Link to="/" className="text-[12px] text-neutral-500 hover:text-white transition-colors duration-200">
                 View all &rarr;
               </Link>

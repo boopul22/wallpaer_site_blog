@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import WallpaperDetail from './pages/WallpaperDetail';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
+import NotFound from './pages/NotFound';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import WallpaperForm from './pages/admin/WallpaperForm';
@@ -38,6 +39,7 @@ const App: React.FC = () => {
             <Route path="/admin/wallpapers/edit/:id" element={<WallpaperForm />} />
             <Route path="/admin/blog-posts/new" element={<BlogPostForm />} />
             <Route path="/admin/blog-posts/edit/:id" element={<BlogPostForm />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

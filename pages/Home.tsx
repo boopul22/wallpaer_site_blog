@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Sparkles } from 'lucide-react';
 import { fetchWallpapers } from '../lib/api';
+import { useSEO } from '../lib/useSEO';
 import { Wallpaper } from '../types';
 import WallpaperCard from '../components/WallpaperCard';
 
@@ -11,6 +12,38 @@ const Home: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(8);
   const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useSEO({
+    title: 'Free Premium Phone Wallpapers | FreeWallpaperVerse',
+    description: 'Download free premium phone wallpapers in 4K. Browse minimalist, abstract, nature, gradient, and dark wallpapers. New backgrounds added weekly.',
+    canonical: 'https://freewallpaperverse.com/',
+    ogImage: 'https://freewallpaperverse.com/og-image.jpg',
+  });
+
+  useEffect(() => {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FreeWallpaperVerse",
+      "url": "https://freewallpaperverse.com",
+      "description": "Free premium phone wallpapers in 4K resolution",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FreeWallpaperVerse",
+        "url": "https://freewallpaperverse.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://freewallpaperverse.com/logo.png"
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-schema';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+    return () => { document.getElementById('page-schema')?.remove(); };
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -29,7 +62,7 @@ const Home: React.FC = () => {
   return (
     <section className="animate-in fade-in duration-500">
       {/* Hero */}
-      <div className="relative overflow-hidden border-b border-white/[0.06]">
+      <header className="relative overflow-hidden border-b border-white/[0.06]">
         {/* Background gradient */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,_rgba(120,119,198,0.08),transparent)]" />
@@ -63,21 +96,20 @@ const Home: React.FC = () => {
                   setSelectedCategory(cat);
                   setVisibleCount(8);
                 }}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-200 ${
-                  selectedCategory === cat
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-200 ${selectedCategory === cat
                     ? 'bg-white text-neutral-950 shadow-[0_0_20px_rgba(255,255,255,0.1)]'
                     : 'border border-white/[0.08] text-neutral-400 hover:text-white hover:border-white/20 hover:bg-white/[0.04]'
-                }`}
+                  }`}
               >
                 {cat}
               </button>
             ))}
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Gallery Grid */}
-      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <section aria-label="Wallpaper gallery" className="mx-auto max-w-7xl px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <div className="spinner" />
@@ -116,7 +148,7 @@ const Home: React.FC = () => {
             )}
           </>
         )}
-      </div>
+      </section>
     </section>
   );
 };
